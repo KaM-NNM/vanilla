@@ -11,9 +11,11 @@ Contact Vanilla Forums Inc. at support [at] vanillaforums [dot] com
 
 /**
  */
-function smarty_function_bookmarks_link($Params, &$Smarty) {
-   $Wrap = GetValue('wrap', $Params, 'li');
-   return Gdn_Theme::Link('discussions/bookmarked',
-      GetValue('text', $Params, T('My Bookmarks')),
-      GetValue('format', $Params, Wrap('<a href="%url" class="%class">%text</a>', $Wrap)));
+if(!function_exists('smarty_function_bookmarks_link')) {
+  function smarty_function_bookmarks_link($Params, &$Smarty) {
+     $Wrap = GetValue('wrap', $Params, 'li');
+     return Gdn_Theme::Link('discussions/bookmarked',
+        GetValue('text', $Params, T('My Bookmarks')),
+        GetValue('format', $Params, Wrap('<a href="%url" class="%class">%text</a>', $Wrap)));
+  }
 }
