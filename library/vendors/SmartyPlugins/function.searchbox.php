@@ -16,16 +16,18 @@ Contact Vanilla Forums Inc. at support [at] vanillaforums [dot] com
  * @param Smarty The smarty object rendering the template.
  * @return The url.
  */
-function smarty_function_searchbox($Params, &$Smarty) {
-   $Placeholder = array_key_exists('placeholder', $Params) ? GetValue('placeholder', $Params, '', TRUE) : T('SearchBoxPlaceHolder', 'Search');
-   $Form = Gdn::Factory('Form');
-   $Form->InputPrefix = '';
-   $Result =
-      $Form->Open(array('action' => Url('/search'), 'method' => 'get')).
-      $Form->TextBox('Search', array('placeholder' => $Placeholder)).
-      $Form->Button('Go', array('Name' => '')).
-      $Form->Close();
-
-   return $Result;
+if(!function_exists('smarty_function_searchbox')) {
+	function smarty_function_searchbox($Params, &$Smarty) {
+	   $Placeholder = array_key_exists('placeholder', $Params) ? GetValue('placeholder', $Params, '', TRUE) : T('SearchBoxPlaceHolder', 'Search');
+	   $Form = Gdn::Factory('Form');
+	   $Form->InputPrefix = '';
+	   $Result =
+	      $Form->Open(array('action' => Url('/search'), 'method' => 'get')).
+	      $Form->TextBox('Search', array('placeholder' => $Placeholder)).
+	      $Form->Button('Go', array('Name' => '')).
+	      $Form->Close();
+	
+	   return $Result;
+	}
 }
 
