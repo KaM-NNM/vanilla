@@ -20,7 +20,7 @@ Contact Vanilla Forums Inc. at support [at] vanillaforums [dot] com
  * @param Smarty The smarty object rendering the template.
  * @return The rendered asset.
  */
-if(!function_exists('smarty_function_searchbox')) {
+if(!function_exists('smarty_function_asset')) {
 	function smarty_function_asset($Params, &$Smarty) {
 		$Name = ArrayValue('name', $Params);
 		$Tag = ArrayValue('tag', $Params, '');
