@@ -16,15 +16,17 @@ Contact Vanilla Forums Inc. at support [at] vanillaforums [dot] com
  * @param Smarty The smarty object rendering the template.
  * @return The url.
  */
-function smarty_block_permission($Params, $Content, &$Smarty, &$Repeat) {
-   // only output on the closing tag
-    if(!$Repeat){
-        if (isset($Content)) {
-           $Require = GetValue('require', $Params);
-           $HasPermission = Gdn::Session()->CheckPermission($Require);
-           if($HasPermission)
-              return $Content;
-        }
-    }
+if(!function_exists('smarty_block_permission')) {
+   function smarty_block_permission($Params, $Content, &$Smarty, &$Repeat) {
+      // only output on the closing tag
+       if(!$Repeat){
+           if (isset($Content)) {
+              $Require = GetValue('require', $Params);
+              $HasPermission = Gdn::Session()->CheckPermission($Require);
+              if($HasPermission)
+                 return $Content;
+           }
+       }
+   }
 }
 
