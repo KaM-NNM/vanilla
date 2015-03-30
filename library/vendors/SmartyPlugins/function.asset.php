@@ -20,43 +20,45 @@ Contact Vanilla Forums Inc. at support [at] vanillaforums [dot] com
  * @param Smarty The smarty object rendering the template.
  * @return The rendered asset.
  */
-function smarty_function_asset($Params, &$Smarty) {
-	$Name = ArrayValue('name', $Params);
-	$Tag = ArrayValue('tag', $Params, '');
-	$Id = ArrayValue('id', $Params, $Name);
-	$Class = ArrayValue('class', $Params, '');
-	if ($Class != '')
-		$Class = ' class="'.$Class.'"';
+if(!function_exists('smarty_function_searchbox')) {
+	function smarty_function_asset($Params, &$Smarty) {
+		$Name = ArrayValue('name', $Params);
+		$Tag = ArrayValue('tag', $Params, '');
+		$Id = ArrayValue('id', $Params, $Name);
+		$Class = ArrayValue('class', $Params, '');
+		if ($Class != '')
+			$Class = ' class="'.$Class.'"';
+		
+		$Controller = $Smarty->Controller;
+	   $Controller->EventArguments['AssetName'] = $Name;
+	   
+	   $Result = '';
 	
-	$Controller = $Smarty->Controller;
-   $Controller->EventArguments['AssetName'] = $Name;
-   
-   $Result = '';
-
-   ob_start();
-   $Controller->FireEvent('BeforeRenderAsset');
-   $Result .= ob_get_clean();
-
-   $Asset = $Controller->GetAsset($Name);
-   
-   if (is_object($Asset)) {
-      $Asset->AssetName = $Name;
-      
-      if (GetValue('Visible', $Asset, TRUE))
-         $Asset = $Asset->ToString();
-      else
-         $Asset = '';
-   }
-
-   if (!empty($Tag)) {
-      $Result .= '<' . $Tag . ' id="' . $Id . '"'.$Class.'>' . $Asset . '</' . $Tag . '>';
-   } else {
-      $Result .= $Asset;
-   }
-   
-   ob_start();
-   $Controller->FireEvent('AfterRenderAsset');
-   $Result .= ob_get_clean();
-
-   return $Result;
+	   ob_start();
+	   $Controller->FireEvent('BeforeRenderAsset');
+	   $Result .= ob_get_clean();
+	
+	   $Asset = $Controller->GetAsset($Name);
+	   
+	   if (is_object($Asset)) {
+	      $Asset->AssetName = $Name;
+	      
+	      if (GetValue('Visible', $Asset, TRUE))
+	         $Asset = $Asset->ToString();
+	      else
+	         $Asset = '';
+	   }
+	
+	   if (!empty($Tag)) {
+	      $Result .= '<' . $Tag . ' id="' . $Id . '"'.$Class.'>' . $Asset . '</' . $Tag . '>';
+	   } else {
+	      $Result .= $Asset;
+	   }
+	   
+	   ob_start();
+	   $Controller->FireEvent('AfterRenderAsset');
+	   $Result .= ob_get_clean();
+	
+	   return $Result;
+	}
 }
